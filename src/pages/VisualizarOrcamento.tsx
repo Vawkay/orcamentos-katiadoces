@@ -132,7 +132,7 @@ export function VisualizarOrcamento() {
       {/* ============================================
           LAYOUT DE IMPRESSÃO / PDF
           ============================================ */}
-      <div ref={printRef} className="p-4 space-y-4 pb-48">
+      <div ref={printRef} className="p-4 space-y-4 pb-56">
 
         {/* Cabeçalho do orçamento (para impressão) */}
         <div className="hidden print:block mb-6 text-center">
@@ -327,8 +327,8 @@ export function VisualizarOrcamento() {
       </div>
 
       {/* Botões de compartilhamento (fixos no rodapé, ocultos na impressão) */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white border-t border-gray-200 p-4 print:hidden flex gap-3"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}
+      <div className="fixed left-0 right-0 max-w-lg mx-auto bg-white border-t border-gray-200 p-4 print:hidden flex gap-3 z-20"
+        style={{ bottom: 'calc(56px + env(safe-area-inset-bottom))' }}
       >
         {/* PDF */}
         <button

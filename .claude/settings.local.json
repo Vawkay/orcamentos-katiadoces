@@ -12,7 +12,10 @@
       "Bash(cmd /c \"npm create vite@latest . -- --template react-ts 2>&1\")",
       "Bash(node:*)",
       "Bash(cmd /c \"git init && git add -A && git status --short\")",
-      "Bash(git -C:*)"
+      "Bash(git -C:*)",
+      "Bash(Start-Sleep 3)",
+      "Bash(Write-Output 'Server starting...' \")",
+      "Bash(npm run dev:*)"
     ]
   }
 }
