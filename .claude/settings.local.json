@@ -15,7 +15,12 @@
       "Bash(git -C:*)",
       "Bash(Start-Sleep 3)",
       "Bash(Write-Output 'Server starting...' \")",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(gh auth status:*)",
+      "Bash(where:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)"
     ]
   }
 }
