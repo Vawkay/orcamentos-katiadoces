@@ -11,6 +11,26 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Katia Doces" />
     <title>Katia Doces - Orçamentos</title>
+    <!-- SPA redirect para GitHub Pages (recebe ?p= do 404.html) -->
+    <script>
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+        // Trata ?p= vindo do 404.html
+        var search = window.location.search;
+        if (search.indexOf('?p=') === 0 || search.indexOf('&p=') !== -1) {
+          var params = new URLSearchParams(search.slice(1));
+          var path = params.get('p') || '/';
+          var query = params.get('q') ? '?' + params.get('q') : '';
+          history.replaceState(null, null,
+            window.location.pathname.replace(/\/[^/]*$/, '') + decodeURIComponent(path) + query + window.location.hash
+          );
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

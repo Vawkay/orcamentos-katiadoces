@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // Redireciona rotas do SPA para o index.html no GitHub Pages
+      // Técnica: https://github.com/rafgraph/spa-github-pages
+      var l = window.location;
+      var base = '/orcamentos-katiadoces';
+      var path = l.pathname.replace(base, '');
+      var search = l.search.slice(1);
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        base + '/?p=' + encodeURIComponent(path) +
+        (search ? '&q=' + encodeURIComponent(search) : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
