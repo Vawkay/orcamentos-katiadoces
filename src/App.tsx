@@ -28,7 +28,7 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/orcamentos-katiadoces">
       <AppRoutes />
       <Toaster
         position="bottom-center"
