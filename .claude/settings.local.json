@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\felip\\\\Projetos\\\\orcamentos-katiadoces\")",
+      "Bash(python:*)",
+      "Bash(test:*)",
+      "Bash(powershell:*)",
+      "Bash(pip install:*)",
+      "Bash(npm create:*)",
+      "Bash(cmd /c \"dir C:\\\\Users\\\\felip\\\\Projetos\\\\orcamentos-katiadoces\")",
+      "Bash(cmd /c \"npm create vite@latest . -- --template react-ts 2>&1\")",
+      "Bash(node:*)",
+      "Bash(cmd /c \"git init && git add -A && git status --short\")",
+      "Bash(git -C:*)"
+    ]
+  }
+}

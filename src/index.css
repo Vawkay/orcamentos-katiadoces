@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 0.75rem;
+}
+
+/* Safe area para notch/home indicator no iPhone */
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Evitar seleção de texto acidental em elementos de UI */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollbar fina */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #f9a8d4;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   PRINT / PDF STYLES
+   ============================================================ */
+@media print {
+  /* Esconder tudo exceto o conteúdo de impressão */
+  body > #root > * {
+    display: none !important;
+  }
+
+  body > #root [data-print="true"] {
+    display: block !important;
+  }
+
+  /* Reset do padding bottom para impressão */
+  body {
+    padding-bottom: 0 !important;
+  }
+
+  /* Margens da página */
+  @page {
+    margin: 15mm;
+    size: A4 portrait;
+  }
+
+  /* Evitar quebra dentro de linhas da tabela */
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Forçar cores para impressão */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
