@@ -34,6 +34,7 @@ export interface Orcamento {
   status: StatusOrcamento
   observacoes?: string
   desconto: number         // em centavos
+  validade_dias?: number   // validade do orçamento em dias
   itens: ItemOrcamento[]
   created_at: string
   updated_at: string
@@ -70,6 +71,7 @@ export interface OrcamentoFormData {
   data_evento: string
   observacoes: string
   desconto_reais: string   // string para o input, convertido na hora de salvar
+  validade_dias: string    // string para o input
 }
 
 export const TIPOS_EVENTO = [

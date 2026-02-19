@@ -28,6 +28,7 @@ export function OrcamentoForm() {
   const [dataEvento, setDataEvento] = useState('')
   const [observacoes, setObservacoes] = useState('')
   const [desconto, setDesconto] = useState('')
+  const [validadeDias, setValidadeDias] = useState('7')
   const [itens, setItens] = useState<ItemOrcamento[]>([])
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -46,6 +47,7 @@ export function OrcamentoForm() {
       setDataEvento(orcamento.data_evento ?? '')
       setObservacoes(orcamento.observacoes ?? '')
       setDesconto(formatInputCurrency(orcamento.desconto))
+      setValidadeDias(orcamento.validade_dias != null ? String(orcamento.validade_dias) : '7')
       setItens(orcamento.itens)
     }
   }, [mode, id, getOrcamento, navigate])
@@ -102,6 +104,7 @@ export function OrcamentoForm() {
   }
 
   function buildInput() {
+    const validadeNum = parseInt(validadeDias, 10)
     return {
       cliente_nome: clienteNome.trim(),
       cliente_tel: clienteTel.trim() || undefined,
@@ -109,6 +112,7 @@ export function OrcamentoForm() {
       data_evento: dataEvento || undefined,
       observacoes: observacoes.trim() || undefined,
       desconto: descontoCentavos,
+      validade_dias: !isNaN(validadeNum) && validadeNum > 0 ? validadeNum : undefined,
       itens,
     }
   }
@@ -255,15 +259,33 @@ export function OrcamentoForm() {
           )}
         </section>
 
-        {/* ---- Seção: Observações ---- */}
+        {/* ---- Seção: Validade + Observações ---- */}
         <section className="space-y-3">
           <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Observações
+            Condições
           </h2>
+
+          {/* Validade */}
+          <div className="flex items-center gap-3 bg-white rounded-2xl border border-gray-200 px-4 py-3">
+            <span className="text-sm text-gray-600 flex-1">Validade do orçamento</span>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                inputMode="numeric"
+                value={validadeDias}
+                onChange={(e) => setValidadeDias(e.target.value)}
+                min={1}
+                max={365}
+                className="w-16 text-center px-2 py-1 rounded-xl border border-gray-200 text-sm outline-none focus:border-pink-400 transition-colors"
+              />
+              <span className="text-sm text-gray-500">dias</span>
+            </div>
+          </div>
+
           <textarea
             value={observacoes}
             onChange={(e) => setObservacoes(e.target.value)}
-            placeholder="Informações adicionais, combinados, entrega..."
+            placeholder="Observações, combinados, forma de entrega..."
             rows={3}
             className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-white text-sm outline-none focus:border-pink-400 transition-colors resize-none"
           />
