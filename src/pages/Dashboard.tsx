@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, Plus, ClipboardList } from 'lucide-react'
+import logoUrl from '/logo.png'
 import { AppShell } from '@/components/layout/AppShell'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { useOrcamentos } from '@/hooks/useOrcamentos'
@@ -35,7 +36,7 @@ export function Dashboard() {
       <div className="p-4 space-y-4">
         {/* Cabeçalho */}
         <div className="pt-2">
-          <img src="/logo.png" alt="Katia Doces" className="h-20 w-auto object-contain" />
+          <img src={logoUrl} alt="Katia Doces" className="h-20 w-auto object-contain" />
           <p className="text-sm text-gray-500 mt-0.5">
             {orcamentos.length} orçamento{orcamentos.length !== 1 ? 's' : ''}
           </p>

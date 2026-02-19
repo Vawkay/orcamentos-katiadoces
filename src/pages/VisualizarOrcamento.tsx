@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
+import logoUrl from '/logo.png'
 import { useEffect, useRef } from 'react'
 import {
   Pencil, FileDown, Share2, Copy, CheckCircle2, XCircle,
@@ -136,7 +137,7 @@ export function VisualizarOrcamento() {
 
         {/* Cabeçalho do orçamento (para impressão) */}
         <div className="hidden print:block mb-6 text-center">
-          <img src="/logo.png" alt="Katia Doces" className="h-24 w-auto object-contain mx-auto mb-3" />
+          <img src={logoUrl} alt="Katia Doces" className="h-24 w-auto object-contain mx-auto mb-3" />
           <h1 className="text-2xl font-bold text-pink-600">{config.nome_negocio}</h1>
           {config.telefone && <p className="text-sm text-gray-600">Tel: {config.telefone}</p>}
           {config.instagram && <p className="text-sm text-gray-600">Instagram: {config.instagram}</p>}

@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { ClipboardList, BookOpen, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import logoUrl from '/logo.png'
 
 interface AppShellProps {
   children: React.ReactNode
@@ -38,7 +39,7 @@ export function AppShell({ children, title, backHref, actions, hideNav }: AppShe
             )}
             {!backHref && (
               <div className="flex items-center gap-2">
-                <img src="/logo.png" alt="Katia Doces" className="h-8 w-auto object-contain" />
+                <img src={logoUrl} alt="Katia Doces" className="h-8 w-auto object-contain" />
               </div>
             )}
             <h1 className="flex-1 font-semibold text-gray-900 text-lg truncate">
