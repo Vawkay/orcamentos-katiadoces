@@ -38,7 +38,7 @@ export function AppShell({ children, title, backHref, actions, hideNav }: AppShe
             )}
             {!backHref && (
               <div className="flex items-center gap-2">
-                <span className="text-xl">🍬</span>
+                <img src="/logo.png" alt="Katia Doces" className="h-8 w-auto object-contain" />
               </div>
             )}
             <h1 className="flex-1 font-semibold text-gray-900 text-lg truncate">
