@@ -309,6 +309,7 @@ export function OrcamentoForm() {
                 inputMode="decimal"
                 value={desconto}
                 onChange={(e) => setDesconto(e.target.value)}
+                onFocus={(e) => e.target.select()}
                 placeholder="0,00"
                 className="w-full pl-8 pr-3 py-2 rounded-xl border border-gray-200 text-sm text-right outline-none focus:border-pink-400 transition-colors"
               />

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Trash2 } from 'lucide-react'
 import type { ItemOrcamento } from '@/lib/types'
 import { formatCurrency, formatInputCurrency, parseCurrency } from '@/lib/utils'
@@ -9,7 +10,37 @@ interface ItemRowProps {
 }
 
 export function ItemRow({ item, onUpdate, onRemove }: ItemRowProps) {
-  const total = item.preco_unit * item.quantidade
+  const [precoStr, setPrecoStr] = useState(() => formatInputCurrency(item.preco_unit))
+  const [qtdStr, setQtdStr] = useState(() => String(item.quantidade))
+
+  // Sincroniza quando o item muda externamente (ex: produto adicionado do catálogo)
+  useEffect(() => {
+    setPrecoStr(formatInputCurrency(item.preco_unit))
+  }, [item.preco_unit])
+
+  useEffect(() => {
+    setQtdStr(String(item.quantidade))
+  }, [item.quantidade])
+
+  // Calcula total usando os valores locais para feedback em tempo real
+  const precoLocal = parseCurrency(precoStr) || 0
+  const qtdLocal = parseFloat(qtdStr.replace(',', '.')) || 0
+  const total = precoLocal * qtdLocal
+
+  function commitPreco() {
+    const v = parseCurrency(precoStr)
+    onUpdate(item.id, { preco_unit: v })
+    setPrecoStr(formatInputCurrency(v))
+  }
+
+  function commitQtd() {
+    const v = parseFloat(qtdStr.replace(',', '.'))
+    if (!isNaN(v) && v > 0) {
+      onUpdate(item.id, { quantidade: v })
+    } else {
+      setQtdStr(String(item.quantidade))
+    }
+  }
 
   return (
     <div className="bg-gray-50 rounded-2xl p-3 space-y-2">
@@ -28,15 +59,12 @@ export function ItemRow({ item, onUpdate, onRemove }: ItemRowProps) {
         <div className="flex-1">
           <label className="text-[10px] text-gray-400 font-medium block mb-1 ml-1">QTD</label>
           <input
-            type="number"
+            type="text"
             inputMode="decimal"
-            min="0.5"
-            step="0.5"
-            value={item.quantidade}
-            onChange={(e) => {
-              const v = parseFloat(e.target.value)
-              if (!isNaN(v) && v > 0) onUpdate(item.id, { quantidade: v })
-            }}
+            value={qtdStr}
+            onChange={(e) => setQtdStr(e.target.value)}
+            onBlur={commitQtd}
+            onFocus={(e) => e.target.select()}
             className="w-full px-3 py-2 bg-white rounded-xl border border-gray-200 text-sm text-center outline-none focus:border-pink-400 transition-colors"
           />
         </div>
@@ -49,11 +77,11 @@ export function ItemRow({ item, onUpdate, onRemove }: ItemRowProps) {
             <input
               type="text"
               inputMode="decimal"
-              value={formatInputCurrency(item.preco_unit)}
-              onChange={(e) => {
-                const v = parseCurrency(e.target.value)
-                onUpdate(item.id, { preco_unit: v })
-              }}
+              value={precoStr}
+              onChange={(e) => setPrecoStr(e.target.value)}
+              onBlur={commitPreco}
+              onFocus={(e) => e.target.select()}
+              placeholder="0,00"
               className="w-full pl-7 pr-2 py-2 bg-white rounded-xl border border-gray-200 text-sm text-right outline-none focus:border-pink-400 transition-colors"
             />
           </div>
