@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Trash2 } from 'lucide-react'
 import type { ItemOrcamento } from '@/lib/types'
-import { formatCurrency, formatInputCurrency, parseCurrency } from '@/lib/utils'
+import { formatCurrency, formatInputCurrency, parseCurrency, sanitizeCurrencyInput, sanitizeQtyInput } from '@/lib/utils'
 
 interface ItemRowProps {
   item: ItemOrcamento
@@ -62,7 +62,7 @@ export function ItemRow({ item, onUpdate, onRemove }: ItemRowProps) {
             type="text"
             inputMode="decimal"
             value={qtdStr}
-            onChange={(e) => setQtdStr(e.target.value)}
+            onChange={(e) => setQtdStr(sanitizeQtyInput(e.target.value))}
             onBlur={commitQtd}
             onFocus={(e) => e.target.select()}
             className="w-full px-3 py-2 bg-white rounded-xl border border-gray-200 text-sm text-center outline-none focus:border-pink-400 transition-colors"
@@ -78,7 +78,7 @@ export function ItemRow({ item, onUpdate, onRemove }: ItemRowProps) {
               type="text"
               inputMode="decimal"
               value={precoStr}
-              onChange={(e) => setPrecoStr(e.target.value)}
+              onChange={(e) => setPrecoStr(sanitizeCurrencyInput(e.target.value))}
               onBlur={commitPreco}
               onFocus={(e) => e.target.select()}
               placeholder="0,00"

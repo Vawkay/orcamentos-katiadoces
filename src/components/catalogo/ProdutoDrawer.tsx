@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import type { Produto, Unidade } from '@/lib/types'
-import { formatInputCurrency, parseCurrency } from '@/lib/utils'
+import { formatInputCurrency, parseCurrency, sanitizeCurrencyInput } from '@/lib/utils'
 
 interface ProdutoDrawerProps {
   isOpen: boolean
@@ -111,7 +111,7 @@ export function ProdutoDrawer({ isOpen, produto, onClose, onSave }: ProdutoDrawe
                   type="text"
                   inputMode="decimal"
                   value={preco}
-                  onChange={(e) => setPreco(e.target.value)}
+                  onChange={(e) => setPreco(sanitizeCurrencyInput(e.target.value))}
                   placeholder="0,00"
                   className={`w-full pl-9 pr-4 py-3 rounded-xl border text-sm transition-colors ${
                     errors.preco

@@ -20,8 +20,14 @@ export function formatCurrency(centavos: number): string {
 /** Converte string de input ("12,50" ou "12.50") para centavos */
 export function parseCurrency(value: string): number {
   if (!value) return 0
-  // Remove símbolos de moeda e espaços, normaliza separador decimal
-  const cleaned = value.replace(/[R$\s]/g, '').replace(',', '.')
+  // Remove tudo exceto dígitos, vírgula e ponto
+  let cleaned = value.replace(/[^\d,.]/g, '')
+  // Se tem vírgula E ponto: "1.250,50" → pontos são milhares
+  if (cleaned.includes(',') && cleaned.includes('.')) {
+    cleaned = cleaned.replace(/\./g, '').replace(',', '.')
+  } else if (cleaned.includes(',')) {
+    cleaned = cleaned.replace(',', '.')
+  }
   const num = parseFloat(cleaned)
   if (isNaN(num)) return 0
   return Math.round(num * 100)
@@ -31,6 +37,46 @@ export function parseCurrency(value: string): number {
 export function formatInputCurrency(centavos: number): string {
   if (centavos === 0) return ''
   return (centavos / 100).toFixed(2).replace('.', ',')
+}
+
+/**
+ * Sanitiza input de moeda enquanto o usuário digita.
+ * Permite apenas dígitos e um separador decimal (vírgula ou ponto → normalizado para vírgula).
+ * Limita a 2 casas decimais.
+ */
+export function sanitizeCurrencyInput(raw: string): string {
+  // Remove tudo exceto dígitos, vírgula e ponto
+  let val = raw.replace(/[^\d,.]/g, '')
+
+  // Normaliza ponto → vírgula (teclados mobile podem enviar ponto no inputMode="decimal")
+  val = val.replace(/\./g, ',')
+
+  // Garante no máximo uma vírgula
+  const firstComma = val.indexOf(',')
+  if (firstComma !== -1) {
+    const before = val.substring(0, firstComma)
+    const after = val.substring(firstComma + 1).replace(/,/g, '')
+    val = before + ',' + after.slice(0, 2)
+  }
+
+  return val
+}
+
+/**
+ * Sanitiza input de quantidade: permite dígitos e um separador decimal, max 1 casa.
+ */
+export function sanitizeQtyInput(raw: string): string {
+  let val = raw.replace(/[^\d,.]/g, '')
+  val = val.replace(/\./g, ',')
+
+  const firstComma = val.indexOf(',')
+  if (firstComma !== -1) {
+    const before = val.substring(0, firstComma)
+    const after = val.substring(firstComma + 1).replace(/,/g, '')
+    val = before + ',' + after.slice(0, 1)
+  }
+
+  return val
 }
 
 // ============================================================

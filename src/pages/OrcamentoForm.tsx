@@ -9,7 +9,7 @@ import { useProdutos } from '@/hooks/useProdutos'
 import { useOrcamentos } from '@/hooks/useOrcamentos'
 import type { ItemOrcamento, Produto } from '@/lib/types'
 import { TIPOS_EVENTO as TIPOS, calcularSubtotal, calcularTotal } from '@/lib/types'
-import { formatCurrency, formatInputCurrency, parseCurrency } from '@/lib/utils'
+import { formatCurrency, formatInputCurrency, parseCurrency, sanitizeCurrencyInput } from '@/lib/utils'
 
 type Mode = 'novo' | 'editar'
 
@@ -308,7 +308,7 @@ export function OrcamentoForm() {
                 type="text"
                 inputMode="decimal"
                 value={desconto}
-                onChange={(e) => setDesconto(e.target.value)}
+                onChange={(e) => setDesconto(sanitizeCurrencyInput(e.target.value))}
                 onFocus={(e) => e.target.select()}
                 placeholder="0,00"
                 className="w-full pl-8 pr-3 py-2 rounded-xl border border-gray-200 text-sm text-right outline-none focus:border-pink-400 transition-colors"
